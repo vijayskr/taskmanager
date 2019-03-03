@@ -1,0 +1,45 @@
+<h3>View Task(s):</h3>
+
+<br>
+<hr style="width: 100%;" class="hrListItem" />
+
+<div *ngIf="Tasks && Tasks.length>0" class="col-md-12">
+  <span class="sortlbl">
+    <strong>Sort By Clicking on Table Header</strong> Priority, Start Date, End Date</span>
+  <table class="table table-hover">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Task Name</th>
+        <th scope="col" (click)="sortTask('Priority')">Priority</th>
+        <th scope="col">Parent</th>
+        <th scope="col" (click)="sortTask('Start_Date')">Start Date</th>
+        <th scope="col" (click)="sortTask('End_Date')">End Date</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let task of Tasks; index as i">
+        <th scope="row">{{ i + 1 }}</th>
+        <td>{{ task.Task }}</td>
+        <td>{{ task.Priority }}</td>
+        <td>
+          <label *ngIf="!task.Parent">This Task Has NO Parent</label>
+          <label *ngIf="task.Parent">{{task.Parent.Parent_Task}}</label>
+        </td>
+        <td>{{ task.Start_Date | date: "MM-dd-yyyy" }}</td>
+        <td>{{ task.End_Date | date: "MM-dd-yyyy" }}</td>
+        <td>
+          <button class="btn btn-primary" (click)="editTask(task.Task_ID)">
+            Edit Task
+          </button> &nbsp;&nbsp;
+          <button class="btn btn-danger" (click)="endTask(task.Task_ID)">
+            End Task
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+
